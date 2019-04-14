@@ -79,6 +79,7 @@
       border-bottom:solid;
       border-bottom-width:1px;
       position:relative;
+      margin-top:-1px;
       z-index:1;
 
     }
@@ -109,7 +110,58 @@
       margin-left:-5px;
 
     }
+    .dotted_quarter_note{
+      background-image: url('/static/dotted-quarter-note.png');
+      background-repeat:no-repeat;
+      background-size: contain;
+      width:30px;
+      height:30px;
+      z-index:2;
+      position:absolute;
+      margin-top:-17px;
+      margin-left:-5px;
+    }
+    .note_choices{
+      border:solid;
+      border-radius:20px;
+      padding:10px;
+      width:800px;
+      margin:0 auto;
+    }
+    .pallete_note{
+      width:60px;
+      height:70px;
+      padding:7px;
 
+    }
+    .pallete_note:hover{
+      cursor:pointer;
+    }
+    .pallete_selected{
+      border:solid;
+      border-color:#4D77EA;
+
+    }
+    .pallete_quarter_note{
+      background-image: url('/static/quarter-note.png');
+      background-repeat:no-repeat;
+      background-size: cover;
+      width:40px;
+      height:40px;
+
+    }
+    .pallete_dotted_quarter_note{
+      background-image: url('/static/dotted-quarter-note.png');
+      background-repeat:no-repeat;
+      background-size: cover;
+      width:40px;
+      height:40px;
+    }
+    .pallete_note:hover{
+      border:solid;
+      border-color:#4D77EA;
+
+    }
   </style>
   <head>
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
@@ -136,7 +188,23 @@
         Puccini
       </div>
     </div>
-    <div style='height:100px'></div>
+    <div style='height:50px'></div>
+    <div class='note_choices'>
+      <div class='container'>
+        <div class='row'>
+          <div class='col-md-auto'>
+            <div class='pallete_note pallete_selected' data-note='quarter_note'><div class='pallete_quarter_note'></div></div>
+          </div>
+          <div class='col-md-auto'>
+            <div class='pallete_note' data-note='dotted_quarter_note'><div class='pallete_dotted_quarter_note'></div></div>
+          </div>
+          <div class='col-md-auto'>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style='height:50px'></div>
     <div class='composition'>
     </div>
 
@@ -145,6 +213,7 @@
   <script>
     $(document).ready(function(){
       var note_block_count = 1;
+      var selected_note = 'quarter_note';
       for (var i = 1; i < 8; i++){
         var html = `
         <table style='margin:0 auto;' data-line='${i}' id='music_table${i}'>
@@ -152,16 +221,36 @@
           <td><div class='clef'></div></td>
           <td>
           <div class='music_line' data-line='${i}' id='music_line${i}'>
-            <div class='music_bar no_border1' data-bar='1' data-parent='${i}' id='music_bar_${i}_1'></div>
-            <div class='music_bar no_border1' data-bar='2' data-parent='${i}' id='music_bar_${i}_2'></div>
-            <div class='music_bar no_border1 no_border2' data-bar='3' data-parent='${i}' id='music_bar_${i}_3'></div>
-            <div class='music_bar' data-bar='4' data-parent='${i}' id='music_bar_${i}_4'></div>
-            <div class='music_bar' data-bar='5' data-parent='${i}' id='music_bar_${i}_5'></div>
-            <div class='music_bar' data-bar='6' data-parent='${i}' id='music_bar_${i}_6'></div>
-            <div class='music_bar' data-bar='7' data-parent='${i}' id='music_bar_${i}_7'></div>
-            <div class='music_bar no_border' data-bar='8' data-parent='${i}' id='music_bar_${i}_8'></div>
-            <div class='music_bar no_border' data-bar='9' data-parent='${i}' id='music_bar_${i}_9'></div>
-            <div class='music_bar no_border' data-bar='10' data-parent='${i}' id='music_bar_${i}_10'></div>
+            <div class='music_bar no_border1' data-bar='1' data-parent='${i}'>
+              <table><tr id='music_bar_${i}_1'></tr></table>
+            </div>
+            <div class='music_bar no_border1' data-bar='2' data-parent='${i}'>
+              <table><tr id='music_bar_${i}_2'></tr></table>
+            </div>
+            <div class='music_bar no_border1 no_border2' data-bar='3' data-parent='${i}'>
+              <table><tr id='music_bar_${i}_3'></tr></table>
+            </div>
+            <div class='music_bar' data-bar='4' data-parent='${i}'>
+              <table><tr id='music_bar_${i}_4'></tr></table>
+            </div>
+            <div class='music_bar' data-bar='5' data-parent='${i}'>
+              <table><tr id='music_bar_${i}_5'></tr></table>
+            </div>
+            <div class='music_bar' data-bar='6' data-parent='${i}'>
+              <table><tr id='music_bar_${i}_6'></tr></table>
+            </div>
+            <div class='music_bar' data-bar='7' data-parent='${i}'>
+              <table><tr id='music_bar_${i}_7'></tr></table>
+            </div>
+            <div class='music_bar no_border' data-bar='8' data-parent='${i}'>
+              <table><tr id='music_bar_${i}_8'></tr></table>
+            </div>
+            <div class='music_bar no_border' data-bar='9' data-parent='${i}'>
+              <table><tr id='music_bar_${i}_9'></tr></table>
+            </div>
+            <div class='music_bar no_border' data-bar='10' data-parent='${i}'>
+              <table><tr id='music_bar_${i}_10'></tr></table>
+            </div>
           </div>
           </td>
         </tr>
@@ -173,7 +262,7 @@
       }
       for (var i = 1; i < 11; i++){
         var html = `
-        <div class='note_block' style='margin-left:60px;' data-blockcount="${note_block_count}" data-position="${i}"></div>
+        <td><div class='note_block' style='margin-left:60px;' data-blockcount="${note_block_count}" data-position="${i}"></div></td>
         `;
         $("#music_bar_1_"+i.toString()).append(html);
       }
@@ -213,13 +302,16 @@
         if (count+1 === note_block_count){
           for (var i = 1; i < 11; i++){
             var html = `
-            <div class='note_block' data-blockcount="${note_block_count}" data-position="${i}"></div>
+            <td><div class='note_block' data-blockcount="${note_block_count}" data-position="${i}"></div></td>
             `;
             $("#music_bar_1_"+i.toString()).append(html);
           }
           note_block_count++;
         }
-        ref.append("<div class='quarter_note'></div>");
+        var new_html = `
+          <div class='${selected_note}'></div>
+        `;
+        ref.append(new_html);
       });
       $(document).on({
 
@@ -239,6 +331,17 @@
 
           }
       }, ".note_block");
+      $('.note_choices').on('click', '.pallete_note', function(){
+        var ref = $(this);
+        $('.pallete_note').each(function(){
+
+          $(this).attr('class', 'pallete_note');
+
+        });
+        selected_note = ref.data('note');
+        ref.attr('class', 'pallete_note pallete_selected');
+
+      })
     });
   </script>
 </html>
