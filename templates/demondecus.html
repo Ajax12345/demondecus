@@ -238,7 +238,7 @@
       z-index:2;
       position:absolute;
       margin-top:-4px;
-      margin-left:-5px;
+      margin-left:-2px;
     }
     .pallete_dotted_half_note{
       background-image: url('/static/dotted-half-note.png');
@@ -251,6 +251,30 @@
       border:solid;
       border-color:#4D77EA;
 
+    }
+    .step_selection{
+      padding:5px;
+      font-family: 'Roboto', sans-serif;
+      font-size:18px;
+      font-weight: bold;
+      text-align: center;
+
+
+    }
+    .step_selection:hover{
+      cursor:pointer;
+      border:solid;
+      border-color:#4D77EA;
+    }
+    .step_selected{
+      border:solid;
+      border-color:#4D77EA;
+    }
+    .has_step{
+      margin-top:-25px;
+    }
+    .whole_note_step{
+      margin-top:-10px;
     }
   </style>
   <head>
@@ -303,6 +327,14 @@
           <div class='col-md-auto'>
             <div class='pallete_note' data-note='whole_note' style='padding:20px;'><div class='pallete_whole_note'></div></div>
           </div>
+          <div class='col-md-auto'>
+            <div style='height:65px;width:2px;background-color:#B1B1B1;'></div>
+          </div>
+          <div class='col-md-auto'>
+            <div class='step_selection step_selected' data-step='no_step'>No Step</div>
+            <div class='step_selection' data-step='has_step'>Step</div>
+
+          </div>
         </div>
       </div>
     </div>
@@ -317,15 +349,25 @@
       function get_notes(){
         var result = [];
         $('.main_note_display').each(function(){
-          result.push({'note':$(this).data('note'), 'line':parseInt($(this).data('line')), 'position':parseInt($(this).data('position')), 'count':parseInt($(this).data('notecount'))});
+          result.push({'note':$(this).data('note'), 'line':parseInt($(this).data('line')), 'position':parseInt($(this).data('position')), 'count':parseInt($(this).data('notecount')), 'step':$(this).data('step')});
         });
         return result;
       }
       var note_count = 1;
       var note_block_count = 1;
       var line_number = 1;
+      var step = 'no_step';
       var reset_flag = false;
       var selected_note = 'quarter_note';
+      function step_class(){
+        if (step === 'no_step'){
+          return 'no_step';
+        }
+        if (selected_note === 'whole_note'){
+          return 'whole_note_step';
+        }
+        return step;
+      }
       for (var i = 1; i < 8; i++){
         var html = `
         <table style='margin:0 auto;' data-line='${i}' id='music_table${i}'>
@@ -431,7 +473,7 @@
           note_block_count++;
         }
         var new_html = `
-          <div class='${selected_note} main_note_display' data-line='${line_number}' data-note='${selected_note}' data-position='${_position}' data-notecount='${note_count}'></div>
+          <div class='${selected_note} main_note_display ${step_class()}' data-line='${line_number}' data-note='${selected_note}' data-position='${_position}' data-notecount='${note_count}' data-step='${step}'></div>
         `;
         note_count++;
         if (note_count%39===0){
@@ -468,7 +510,15 @@
         selected_note = ref.data('note');
         ref.attr('class', 'pallete_note pallete_selected');
 
-      })
+      });
+      $('.note_choices').on('click', '.step_selection', function(){
+        var ref = $(this);
+        $('.step_selection').each(function(){
+          $(this).attr('class', 'step_selection');
+        });
+        step = $(this).data('step');
+        ref.attr('class', 'step_selection step_selected');
+      });
     });
   </script>
 </html>
