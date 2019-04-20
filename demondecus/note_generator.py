@@ -39,6 +39,10 @@ class Note(metaclass=NoteControl):
         self.__dict__ = dict(zip(self.__class__.headers, args))
     def __iter__(self) -> typing.Iterator:
         yield from [getattr(self, i) for i in self.__class__.headers]
+    @property
+    def line_num(self) -> dict:
+        _note = self.__class__.note_placement[self.step]
+        return {'line':_note.num+(8*abs(int(_note.octave)-int(self.octave))) if int(self.octave) >= int(_note.octave) else (8*abs(int(_note.octave)-int(self.octave))) - _note.num, 'step':_note.is_step}
     def __repr__(self) -> str:
         return f'{self.__class__.__name__}(step={self.step}, octave={self.octave}, type={self.note_type})'
 
@@ -48,7 +52,9 @@ class NoteGenerator:
         return [Note(*[getattr(getattr(i, c), 'text', None) for c in ['step', 'octave', 'type']]) for i in soup(open(f'datasets/{_name}.musicxml').read(), 'html.parser').find_all('note')]
 
 if __name__ == '__main__':
-    #print([tuple(i) for i in NoteGenerator.parse_file('Chant')])
+    _d = NoteGenerator.parse_file('Chant')
+    print([tuple(i) for i in _d])
+    print([i.line_num for i in _d])
     #print([tuple(i) for i in NoteGenerator.parse_file('MozartTrio')])
-    #print([tuple(i) for i in NoteGenerator.parse_file('DebuMandSample')])
-    print(Note[{"note":"sixteenth_note","line":1,"position":9,"count":4,"step":"has_step"}])
+    #print([tuple(i) for i in NoteGenerator.parse_file('1_Marche_Slav_-_Tchaikovsky')])
+    #print(Note[{"note":"sixteenth_note","line":1,"position":2,"count":4,"step":"no_step"}])
