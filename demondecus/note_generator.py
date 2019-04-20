@@ -42,7 +42,7 @@ class Note(metaclass=NoteControl):
     @property
     def line_num(self) -> dict:
         _note = self.__class__.note_placement[self.step]
-        return {'line':_note.num+(8*abs(int(_note.octave)-int(self.octave))) if int(self.octave) >= int(_note.octave) else (8*abs(int(_note.octave)-int(self.octave))) - _note.num, 'step':_note.is_step}
+        return {'line':abs(_note.num-(4*abs(int(_note.octave)-int(self.octave)))) + int(not _note.is_step if int(_note.octave) != int(self.octave) else 0), 'step':not _note.is_step if int(_note.octave) != int(self.octave) else _note.is_step}
     def __repr__(self) -> str:
         return f'{self.__class__.__name__}(step={self.step}, octave={self.octave}, type={self.note_type})'
 
@@ -52,9 +52,10 @@ class NoteGenerator:
         return [Note(*[getattr(getattr(i, c), 'text', None) for c in ['step', 'octave', 'type']]) for i in soup(open(f'datasets/{_name}.musicxml').read(), 'html.parser').find_all('note')]
 
 if __name__ == '__main__':
-    _d = NoteGenerator.parse_file('Chant')
-    print([tuple(i) for i in _d])
-    print([i.line_num for i in _d])
+    #_d = [i for i in NoteGenerator.parse_file('MozartTrio')]
+    #print(_d[:10])
+    #print([tuple(i) for i in _d[:10]])
+    #print([i.line_num for i in _d[:10]])
     #print([tuple(i) for i in NoteGenerator.parse_file('MozartTrio')])
     #print([tuple(i) for i in NoteGenerator.parse_file('1_Marche_Slav_-_Tchaikovsky')])
-    #print(Note[{"note":"sixteenth_note","line":1,"position":2,"count":4,"step":"no_step"}])
+    print(Note[{"note":"sixteenth_note","line":1,"position":5,"count":4,"step":"no_step"}])
