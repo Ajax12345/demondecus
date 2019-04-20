@@ -28,7 +28,6 @@ class NoteControl(type):
             if _d == 1:
                 return NoteFormat(a, _val['position'], b.octave, cls[_val['note']], _val['step'] == 'has_step')
             if not _d%8:
-                #return (a, LineObj(_val['position'], b.octave+(_d//8), _val['step'] == 'has_step'))
                 return NoteFormat(a, _val['position'], b.octave+([-1, 1][_flag]*(_d//8)), cls[_val['note']], _val['step'] == 'has_step')
 
 class Note(metaclass=NoteControl):
