@@ -276,6 +276,22 @@
     .whole_note_step{
       margin-top:-10px;
     }
+    .predict_note{
+      font-size:25px;
+      border:none;
+      color:white;
+      font-family: 'Roboto', sans-serif;
+      background-color: #4D77EA;
+      border-radius:20px;
+      padding:15px;
+    }
+    .predict_note:hover{
+      cursor:pointer;
+    }
+    .or_text{
+      font-size:25px;
+      font-family: 'Roboto', sans-serif;
+    }
   </style>
   <head>
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
@@ -303,41 +319,51 @@
       </div>
     </div>
     <div style='height:50px'></div>
-    <div class='note_choices'>
-      <div class='container'>
-        <div class='row'>
-          <div class='col-md-auto'>
-            <div class='pallete_note pallete_selected' data-note='quarter_note'><div class='pallete_quarter_note'></div></div>
-          </div>
-          <div class='col-md-auto'>
-            <div class='pallete_note' data-note='dotted_quarter_note'><div class='pallete_dotted_quarter_note'></div></div>
-          </div>
-          <div class='col-md-auto'>
-            <div class='pallete_note' data-note='eighth_note'><div class='pallete_eighth_note'></div></div>
-          </div>
-          <div class='col-md-auto'>
-            <div class='pallete_note' data-note='sixteenth_note'><div class='pallete_sixteenth_note'></div></div>
-          </div>
-          <div class='col-md-auto'>
-            <div class='pallete_note' data-note='half_note'><div class='pallete_half_note'></div></div>
-          </div>
-          <div class='col-md-auto'>
-            <div class='pallete_note' data-note='dotted_half_note'><div class='pallete_dotted_half_note'></div></div>
-          </div>
-          <div class='col-md-auto'>
-            <div class='pallete_note' data-note='whole_note' style='padding:20px;'><div class='pallete_whole_note'></div></div>
-          </div>
-          <div class='col-md-auto'>
-            <div style='height:65px;width:2px;background-color:#B1B1B1;'></div>
-          </div>
-          <div class='col-md-auto'>
-            <div class='step_selection step_selected' data-step='no_step'>No Step</div>
-            <div class='step_selection' data-step='has_step'>Step</div>
+    <table style='margin:0 auto;' class='outer_predict_wrapper'>
+      <tr>
+        <td>
+        <div class='note_choices'>
+          <div class='container'>
+            <div class='row'>
+              <div class='col-md-auto'>
+                <div class='pallete_note pallete_selected' data-note='quarter_note'><div class='pallete_quarter_note'></div></div>
+              </div>
+              <div class='col-md-auto'>
+                <div class='pallete_note' data-note='dotted_quarter_note'><div class='pallete_dotted_quarter_note'></div></div>
+              </div>
+              <div class='col-md-auto'>
+                <div class='pallete_note' data-note='eighth_note'><div class='pallete_eighth_note'></div></div>
+              </div>
+              <div class='col-md-auto'>
+                <div class='pallete_note' data-note='sixteenth_note'><div class='pallete_sixteenth_note'></div></div>
+              </div>
+              <div class='col-md-auto'>
+                <div class='pallete_note' data-note='half_note'><div class='pallete_half_note'></div></div>
+              </div>
+              <div class='col-md-auto'>
+                <div class='pallete_note' data-note='dotted_half_note'><div class='pallete_dotted_half_note'></div></div>
+              </div>
+              <div class='col-md-auto'>
+                <div class='pallete_note' data-note='whole_note' style='padding:20px;'><div class='pallete_whole_note'></div></div>
+              </div>
+              <div class='col-md-auto'>
+                <div style='height:65px;width:2px;background-color:#B1B1B1;'></div>
+              </div>
+              <div class='col-md-auto'>
+                <div class='step_selection step_selected' data-step='no_step'>No Step</div>
+                <div class='step_selection' data-step='has_step'>Step</div>
 
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
+      </td>
+      <td><div style='width:60px;text-align:center;'><span class='or_text'>or</span></div></td>
+      <td>
+        <button class='predict_note'>Predict!</button>
+      </td>
+    </tr>
+    </table>
     <div style='height:50px'></div>
     <div class='composition'>
     </div>
@@ -367,6 +393,16 @@
           return 'whole_note_step';
         }
         return step;
+      }
+      function get_step_val(_note, step){
+        if (step){
+          if (_note === 'whole'){
+            return 'whole_note_step';
+          }
+          return 'has_step';
+        }
+        return 'no_step';
+
       }
       for (var i = 1; i < 8; i++){
         var html = `
@@ -518,6 +554,62 @@
         });
         step = $(this).data('step');
         ref.attr('class', 'step_selection step_selected');
+      });
+      $('.outer_predict_wrapper').on('click', '.predict_note', function(){
+
+          var selected;
+          $('.pannel_composer').each(function(){
+            if ($(this).prop('class').match('selected')){
+              selected = $(this).data('composer');
+            }
+          });
+          $.ajax({
+            url: "/predict_note",
+            type: "get",
+            data: {'notes': JSON.stringify(get_notes()), 'composer':selected},
+            success: function(response) {
+              var converter = {'eighth': 'eighth_note', 'quarter': 'quarter_note', '16th': 'sixteenth_note', 'half': 'half_note', 'whole': 'whole_note'};
+              note_count++;
+              var step_val = get_step_val(response.result.note.type, response.result.note.step);
+              var new_html = `
+                <div class='${converter[response.result.note.type]} main_note_display ${step_val}' data-line='${line_number}' data-note='${converter[response.result.note.type]}' data-position='${response.result.note.line}' data-notecount='${note_count}' data-step='${step_val}'></div>
+              `;
+              $('.note_block').each(function(){
+                if (parseInt($(this).data('blockcount')) === note_block_count-1){
+                  $(this).css('background-color', 'white');
+                  var pos = parseInt($(this).data('position'));
+                  if (3 > pos || pos > 7 ){
+                    $(this).css('border-bottom-color', 'white');
+                  }
+                  if (parseInt($(this).data('position')) === response.result.note.line){
+                    $(this).html(new_html);
+                  }
+                }
+              });
+              note_block_count++;
+              for (var i = 1; i < 11; i++){
+                if (reset_flag){
+                  var html = `
+                  <td><div class='note_block' data-blockcount="${note_block_count}" data-position="${i}" style='margin-left:60px;'></div></td>
+                  `;
+
+                }
+                else{
+                  var html = `
+                  <td><div class='note_block' data-blockcount="${note_block_count}" data-position="${i}"></div></td>
+                  `;
+                }
+
+                $("#music_bar_"+line_number.toString()+"_"+i.toString()).append(html);
+              }
+              reset_flag= false;
+              note_block_count++;
+            },
+            error: function(xhr) {
+              //Do Something to handle error
+            }
+          });
+
       });
     });
   </script>
