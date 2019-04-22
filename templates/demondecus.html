@@ -587,6 +587,10 @@
                 }
               });
               note_block_count++;
+              if (note_count%39===0){
+                reset_flag = true;
+                line_number++;
+              }
               for (var i = 1; i < 11; i++){
                 if (reset_flag){
                   var html = `
@@ -602,6 +606,7 @@
 
                 $("#music_bar_"+line_number.toString()+"_"+i.toString()).append(html);
               }
+
               reset_flag= false;
               note_block_count++;
             },
