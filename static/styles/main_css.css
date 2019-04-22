@@ -1,0 +1,292 @@
+.clef{
+      background-image: url('/static/treble_cleff.png');
+      background-repeat:no-repeat;
+      background-size: cover;
+      width:80px;
+      height:80px;
+      margin-right:-65px;
+      margin-top:-20px;
+    }
+    .music_line{
+      width:900px;
+      height:165px;
+
+    }
+    .music_bar{
+      width:900px;
+      height:15px;
+      border-bottom:solid;
+      border-bottom-width:1px;
+      border-right:solid;
+      border-left:solid;
+      border-right-width:1px;
+      border-left-width:1px;
+    }
+    .header{
+      height:70px;
+      width:auto;
+      background-color: #4D77EA;
+    }
+    .select_datasets{
+      color:white;
+      font-size:20px;
+      line-height:70px;
+      float:right;
+      margin-right:60px;
+      font-family: 'Roboto', sans-serif;
+
+    }
+    .select_datasets:hover{
+      cursor:pointer;
+      text-decoration: underline;
+
+    }
+    .composer_pannel{
+      width:250px;
+      padding-top:10px;
+      padding-bottom:10px;
+      border:solid;
+      border-top:none;
+      border-bottom-right-radius: 10px;
+      border-bottom-left-radius: 10px;
+      position:absolute;
+      border-width:1px;
+      margin-left:1130px;
+      text-align: center;
+      background-color: white;
+      z-index:1;
+
+    }
+    .pannel_composer{
+      padding:5px;
+      font-family: 'Roboto', sans-serif;
+      font-size:24px;
+      z-index:1;
+
+    }
+    .pannel_composer:hover{
+      cursor:pointer;
+    }
+    .selected{
+      background-color: #CFCFCF;
+    }
+    .note_block{
+      height:15px;
+      width:20px;
+      background-color: #F46A8A;
+      border-bottom:solid;
+      border-bottom-width:1px;
+      position:relative;
+      margin-top:-1px;
+      z-index:1;
+
+    }
+
+    .no_border{
+      border-bottom:none;
+      border-left-color:white;
+      border-right-color:white;
+    }
+    .no_border1{
+      border-bottom:none;
+      border-left-color:white;
+      border-right-color:white;
+    }
+    .no_border2{
+      border-bottom:solid;
+      border-bottom-width:1px;
+    }
+    .quarter_note{
+      background-image: url('/static/quarter-note.png');
+      background-repeat:no-repeat;
+      background-size: contain;
+      width:30px;
+      height:30px;
+      z-index:2;
+      position:absolute;
+      margin-top:-17px;
+      margin-left:-5px;
+
+    }
+    .eighth_note{
+      background-image: url('/static/eighth-note.png');
+      background-repeat:no-repeat;
+      background-size: contain;
+      width:30px;
+      height:30px;
+      z-index:2;
+      position:absolute;
+      margin-top:-17px;
+      margin-left:-5px;
+    }
+    .sixteenth_note{
+      background-image: url('/static/sixteenth-note.png');
+      background-repeat:no-repeat;
+      background-size: contain;
+      width:30px;
+      height:30px;
+      z-index:2;
+      position:absolute;
+      margin-top:-17px;
+      margin-left:-5px;
+    }
+    .half_note{
+      background-image: url('/static/half-note.png');
+      background-repeat:no-repeat;
+      background-size: contain;
+      width:30px;
+      height:30px;
+      z-index:2;
+      position:absolute;
+      margin-top:-17px;
+      margin-left:-5px;
+    }
+    .dotted_half_note{
+      background-image: url('/static/dotted-half-note.png');
+      background-repeat:no-repeat;
+      background-size: contain;
+      width:30px;
+      height:30px;
+      z-index:2;
+      position:absolute;
+      margin-top:-17px;
+      margin-left:-5px;
+    }
+    .dotted_quarter_note{
+      background-image: url('/static/dotted-quarter-note.png');
+      background-repeat:no-repeat;
+      background-size: contain;
+      width:30px;
+      height:30px;
+      z-index:2;
+      position:absolute;
+      margin-top:-17px;
+      margin-left:-5px;
+    }
+    .note_choices{
+      border:solid;
+      border-radius:20px;
+      padding:10px;
+      width:800px;
+      margin:0 auto;
+    }
+    .pallete_note{
+      width:60px;
+      height:70px;
+      padding:7px;
+
+    }
+    .pallete_note:hover{
+      cursor:pointer;
+    }
+    .pallete_selected{
+      border:solid;
+      border-color:#4D77EA;
+
+    }
+    .pallete_quarter_note{
+      background-image: url('/static/quarter-note.png');
+      background-repeat:no-repeat;
+      background-size: cover;
+      width:40px;
+      height:40px;
+
+    }
+    .pallete_eighth_note{
+      background-image: url('/static/eighth-note.png');
+      background-repeat:no-repeat;
+      background-size: cover;
+      width:40px;
+      height:40px;
+    }
+    .pallete_sixteenth_note{
+      background-image: url('/static/sixteenth-note.png');
+      background-repeat:no-repeat;
+      background-size: cover;
+      width:40px;
+      height:40px;
+    }
+    .pallete_dotted_quarter_note{
+      background-image: url('/static/dotted-quarter-note.png');
+      background-repeat:no-repeat;
+      background-size: cover;
+      width:40px;
+      height:40px;
+    }
+    .pallete_half_note{
+      background-image: url('/static/half-note.png');
+      background-repeat:no-repeat;
+      background-size: cover;
+      width:40px;
+      height:40px;
+    }
+    .pallete_whole_note{
+      background-image: url('/static/whole-note.png');
+      background-repeat:no-repeat;
+      background-size: cover;
+      width:20px;
+      height:20px;
+    }
+    .whole_note{
+      background-image: url('/static/whole-note.png');
+      background-repeat:no-repeat;
+      background-size: contain;
+      width:20px;
+      height:20px;
+      z-index:2;
+      position:absolute;
+      margin-top:-4px;
+      margin-left:-2px;
+    }
+    .pallete_dotted_half_note{
+      background-image: url('/static/dotted-half-note.png');
+      background-repeat:no-repeat;
+      background-size: cover;
+      width:40px;
+      height:40px;
+    }
+    .pallete_note:hover{
+      border:solid;
+      border-color:#4D77EA;
+
+    }
+    .step_selection{
+      padding:5px;
+      font-family: 'Roboto', sans-serif;
+      font-size:18px;
+      font-weight: bold;
+      text-align: center;
+
+
+    }
+    .step_selection:hover{
+      cursor:pointer;
+      border:solid;
+      border-color:#4D77EA;
+    }
+    .step_selected{
+      border:solid;
+      border-color:#4D77EA;
+    }
+    .has_step{
+      margin-top:-25px;
+    }
+    .whole_note_step{
+      margin-top:-10px;
+    }
+    .predict_note{
+      font-size:25px;
+      border:none;
+      color:white;
+      font-family: 'Roboto', sans-serif;
+      background-color: #4D77EA;
+      border-radius:20px;
+      padding:15px;
+    }
+    .predict_note:hover{
+      cursor:pointer;
+    }
+    .or_text{
+      font-size:25px;
+      font-family: 'Roboto', sans-serif;
+    }
