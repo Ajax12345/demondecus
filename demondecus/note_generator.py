@@ -89,12 +89,7 @@ class NoteGenerator:
         model.fit(data, results)
         final_note = all_notes[int(model.predict([_n[-l:]])[0])]
         return {'note':{**final_note.line_num, 'type':final_note.note_type}}
-
-        #_n = [len(Note[i]) for i in sorted(_notes, key=lambda x:x['count'])]
-        #print(_n)
-        
-        return 'True'
-
+    
 if __name__ == '__main__':
     #_d = [len(i) for i in NoteGenerator.parse_file('MozartTrio') if all(i)]
     #print(_d)
